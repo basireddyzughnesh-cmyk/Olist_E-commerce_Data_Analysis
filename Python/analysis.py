@@ -9,14 +9,14 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DATA_DIR = os.path.join(BASE_DIR, "data")
-CHART_DIR = r"C:\Users\Zugne\OneDrive\Desktop\Project1\images"
-OUTPUT_DIR = r"C:\Users\Zugne\OneDrive\Desktop\Project1\output"
+DATA_DIR = os.path.join(BASE_DIR, "Data")
+CHART_DIR = os.path.join(BASE_DIR, "charts")
+OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 
 os.makedirs(CHART_DIR, exist_ok=True)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-FILE_PATH = r"C:\Users\Zugne\OneDrive\Desktop\Project1\data\Sales Dataset.csv"
+FILE_PATH = os.path.join(DATA_DIR, "Sales Dataset.csv")
 
 
 # ============================================================
