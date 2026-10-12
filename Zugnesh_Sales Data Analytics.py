@@ -10,6 +10,7 @@
 # ==============================================================================
 
 import os
+import sys
 import warnings
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -19,6 +20,15 @@ import seaborn as sns
 from matplotlib.ticker import FuncFormatter
 
 warnings.filterwarnings("ignore")
+
+# Force UTF-8 output so Unicode characters print correctly on Windows terminals
+# that default to cp1252 or other legacy encodings.
+for stream in (sys.stdout, sys.stderr):
+    try:
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 # ==============================================================================
 # SECTION 2 – CONFIGURATION
@@ -66,7 +76,7 @@ def save_fig(filename: str):
     path = os.path.join(CHARTS_DIR, filename)
     plt.savefig(path, bbox_inches="tight")
     plt.close()
-    print(f"  ✔ Saved → {path}")
+    print(f"  [OK] Saved -> {path}")
 
 
 def section_header(title: str):
@@ -124,9 +134,9 @@ def data_quality_check(df: pd.DataFrame) -> None:
     # Date column check
     try:
         pd.to_datetime(df["Order Date"])
-        print("\n  'Order Date' column : parseable as date ✔")
+        print("\n  'Order Date' column : parseable as date [OK]")
     except Exception:
-        print("\n  'Order Date' column : contains unparseable date strings ✘")
+        print("\n  'Order Date' column : contains unparseable date strings [FAIL]")
 
     # Categorical value check
     print(f"\n  Unique Categories   : {df['Category'].unique().tolist()}")
@@ -134,13 +144,13 @@ def data_quality_check(df: pd.DataFrame) -> None:
     print(f"  Unique States       : {df['State'].unique().tolist()}")
     print(f"  Unique PaymentModes : {df['PaymentMode'].unique().tolist()}")
 
-    print("\n  ── DATA QUALITY SUMMARY ──────────────────────────────────────")
-    print(f"  • No missing values detected in any column.")
-    print(f"  • No duplicate rows detected.")
-    print(f"  • No negative values in Amount, Profit or Quantity.")
-    print(f"  • Order Date column is well-formed and parseable.")
-    print(f"  • All categorical columns have consistent, clean values.")
-    print("  ─────────────────────────────────────────────────────────────")
+    print("\n  --- DATA QUALITY SUMMARY ------------------------------------------")
+    print("  * No missing values detected in any column.")
+    print("  * No duplicate rows detected.")
+    print("  * No negative values in Amount, Profit or Quantity.")
+    print("  * Order Date column is well-formed and parseable.")
+    print("  * All categorical columns have consistent, clean values.")
+    print("  -----------------------------------------------------------------")
 
 # ==============================================================================
 # SECTION 6 – DATA CLEANING
